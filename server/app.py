@@ -79,8 +79,7 @@ class PlantByID(Resource):
         db.session.delete(plant)
         db.session.commit()
 
-        response_dict = {"message": "plant successfully deleted"}
-        return make_response(response_dict, 200)
+        return '', 204
 
 
 
