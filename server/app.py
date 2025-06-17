@@ -71,20 +71,17 @@ class PlantByID(Resource):
         return make_response(plant.to_dict(), 200)
         
     def delete(self, id):
+        plant = Plant.query.filter_by(id=id).first()
 
-        data1 = Plant.query.filter(Plant.id == id).first()
+        if not plant:
+            return make_response({"error": "Plant not found"}, 404)
 
-        db.session.delete(data1)
+        db.session.delete(plant)
         db.session.commit()
 
-        response_dict = {"No Content"}
+        response_dict = {"message": "plant successfully deleted"}
+        return make_response(response_dict, 200)
 
-        response = make_response(
-            response_dict,
-            204
-        )
-
-        return response
 
 
 api.add_resource(PlantByID, '/plants/<int:id>')
